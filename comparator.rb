@@ -45,8 +45,18 @@ end
 #read command line args and take appropriate action
 len = ARGV.length
 if len == 2
-	comparator = Comparator.new(ARGV[0], ARGV[1])
-	comparator.compare_files()
+	file_one_exists = File.exists?(ARGV[0])
+	file_two_exists = File.exists?(ARGV[1])
+	if !file_one_exists
+		puts "#{ARGV[0]} does not exist"
+	end
+	if !file_two_exists
+		puts "#{ARGV[1]} does not exist"
+	end
+	if file_one_exists && file_two_exists
+		comparator = Comparator.new(ARGV[0], ARGV[1])
+		comparator.compare_files()
+	end
 else
 	puts "need 2 file names, #{len} provided, try this: ruby comparator.rb file1.txt file2.txt"
 end
